@@ -1,8 +1,15 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+h1 {
+  font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+  color: goldenrod;
 }
 
-a {
-  color: #00B7FF;
+p {
+  font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+  color: goldenrod;
+}
+
+button {
+  font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+  font-size: 15px;
+  shape-outside: cross-fade(); 
 }
