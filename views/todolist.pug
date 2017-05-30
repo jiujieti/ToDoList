@@ -3,6 +3,7 @@ extends layout
 block content
   h1= title
   p
-    form(method='POST')
-      input(type='text', name='Submit an item', class='submitItem')
-      button(class='addItem') Add an item 
+    input(type='text', name='Submit an item', class='submitItem')
+    button(class='addItem') Add an item
+    ul(id='l1', class='items')
+  script(src='/javascripts/update.js') 
