@@ -8,7 +8,10 @@ router.get('/', (req, res) => {
 
 /* POST user, redirect to a user's to do list page */
 router.post('/todolist', (req, res) => {
-  res.render('todolist', { title: 'Your To Do List - 您未竟的事业' });
+  // add user auth (to be deleted)
+//  if(req.body.username === user.name && req.body.password === user.password) {
+    res.render('todolist', { title: 'Your To Do List - 您未竟的事业' });
+ // }
 });
 
 module.exports = router;
