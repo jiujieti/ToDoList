@@ -7,5 +7,4 @@ var ToDoListSchema = Schema({
   item: [{type: String}]
 });
 
-// export model
 module.exports = mongoose.model('ToDoList', ToDoListSchema);

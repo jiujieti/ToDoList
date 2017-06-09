@@ -7,5 +7,4 @@ var UserSchema = Schema({
   password: {type: String, required: true, max: 30, min: 8}
 });
 
-// export model
 module.exports = mongoose.model('User', UserSchema);

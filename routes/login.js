@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
   res.render('index', { title: 'To Do List - 未竟的事业' });
 });
 
-/* POST user, redirect to a user's to do list page */
+/* user login, redirect to a user's to do list page */
 router.post('/todolist', (req, res) => {
   // add user auth (to be deleted)
 //  if(req.body.username === user.name && req.body.password === user.password) {
