@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var Schema = moogoose.Schema;
 
 var ToDoListSchema = Schema(
-  user: {type: Schema.ObjectId, ref: 'User', required: true},
+  username: {type: Schema.ObjectId, ref: 'User', required: true},
   item: [{type: String}]
 );
 
