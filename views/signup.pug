@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1= 'Sign Up - 注册'
+  p
+    form(action='/signup/verification', metohd='POST', class='signup')
+      div
+        input(type='text', class='username')
+        input(type='text', class='password')
+        input(type='text', class='pdconfirm')
+        button Sign Up
