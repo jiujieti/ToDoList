@@ -5,4 +5,9 @@ router.get('/', (req, res) => {
   res.render('signup');
 });
 
+/* validate registry */
+router.post('/verification', (req, res) => {
+  res.redirect('/login');
+});
+
 module.exports = router;
