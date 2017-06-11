@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  res.render('index', { title: 'To Do List - 未竟的事业' });
+  res.render('index');
 });
 
 /* user login, redirect to a user's to do list page */
