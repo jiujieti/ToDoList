@@ -8,4 +8,17 @@ var UserSchema = Schema({
   salt: { type: String, required: true }
 });
 
+// check username uniqueness
+UserSchema.pre('save', (next) => {
+  var user = this;
+  user.findOne({ username:  user.username }, 'username', (error, results) => {});
+    if(error) {
+      next(error);
+    } else if(results) {
+      next(new Error("User already registered!"));
+    } else {
+      next();
+    }
+});
+
 module.exports = mongoose.model('User', UserSchema);
