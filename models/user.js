@@ -11,7 +11,7 @@ var UserSchema = Schema({
 // check username uniqueness
 UserSchema.pre('save', (next) => {
   var user = this;
-  user.findOne({ username:  user.username }, 'username', (error, results) => {});
+  user.findOne({ username:  user.username }, 'username', (error, results) => {
     if(error) {
       next(error);
     } else if(results) {
@@ -19,6 +19,7 @@ UserSchema.pre('save', (next) => {
     } else {
       next();
     }
+  });
 });
 
 module.exports = mongoose.model('User', UserSchema);
