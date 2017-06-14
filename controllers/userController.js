@@ -1,17 +1,21 @@
 var User = require('../models/user');
+var bcrypt = require('bcrypt');
 
 exports.create_user = (req, res) => {
-  var newUser = new User({
+  if(req.body.password === req.body.pdconfirm) {
+    var genSalt = bcrypt.genSalt(10);
+    var genHash = bcrypt.hash(req.body.password, genSalt);
+    var newUser = new User({
       username: req.body.username,
-      hash: req.body.password,
-      salt: req.body.pdconfirm
-  });
-  if(req.body.password == req.body.pdconfirm) {
+      hash: genHash,
+      salt: genSalt
+    });
     newUser.save((error) => {
-      if(error) { throw error; }
-      res.redirect('/login');
+      if(error) {
+        res.render('Signup', {'error': error.message});
+      }
     });
   } else {
-    res.redirect('/signup');
+    res.render('Signup', {'error': 'Passwords are different! Please reenter them again.'});
   }
 };
