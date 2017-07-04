@@ -1,26 +1,25 @@
 var User = require('../models/user');
-var bcrypt = require('bcrypt');
 
 exports.create_user = (req, res) => {
   
   if(req.body.password === req.body.pdconfirm) {
     
-    if(req.body.password.length <= 8) {
+    if(req.body.password.length < 8) {
       res.render('Signup', {'error': 'Password cannot be less than 8 characters.'});
     }
     
-    var genSalt = bcrypt.genSalt(10);
-    var genHash = bcrypt.hash(req.body.password, genSalt);
     var newUser = new User({
       username: req.body.username,
-      hash: genHash,
-      salt: genSalt
+      password: req.body.password
     });
+    debugger;
   
     newUser.save((error) => {
       if(error) {
-        res.render('Signup', {'error': error.message});
+        res.render('Signup', {'error': error});
+        return;
       }
+        res.redirect('/login');
     });
   
   } else {
