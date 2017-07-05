@@ -1,6 +1,6 @@
 // set up mongoose connection
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb://mengqi:12345678@ds155811.mlab.com:55811/user_todolists';
+var mongoDB = 'mongodb://username:password@ds155811.mlab.com:55811/user_todolists';
 mongoose.connect(mongoDB);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
