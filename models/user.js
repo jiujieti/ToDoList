@@ -12,16 +12,12 @@ var UserSchema = Schema({
 var User = mongoose.model('User', UserSchema);
 
 // check username uniqueness
-UserSchema.pre('validate', (next) => {
-  debugger;
+UserSchema.path('username').validate(function(value, next) {
   var user = this;
-  console.log(user);
-
-  User.findOne({ username: user.username }, 'username', (error, results) => {
+  User.count({ username: user.username }, function(error, results) {
     if(error) {
       next(error);
     } else if(results) {
-      console.log(results);
       next(new Error('User already registered!'));
     } else {
       next();
@@ -30,13 +26,13 @@ UserSchema.pre('validate', (next) => {
 });
 
 // generate salt
-UserSchema.pre('save', (next) => {
+UserSchema.pre('save', function(next) {
   var user = this;
-  bcrypt.genSalt(saltRounds, (error, salt) => {
+  bcrypt.genSalt(saltRounds, function(error, salt) {
     if(error) {
       next(error);
     }
-    bcrypt.hash(user.password, salt, (err, hash) => {
+    bcrypt.hash(user.password, salt, function(err, hash) {
       if(err) {
         next(err);
       }
@@ -45,5 +41,6 @@ UserSchema.pre('save', (next) => {
     });
   });
 });
+
 
 module.exports = mongoose.model('User', UserSchema);

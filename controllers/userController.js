@@ -12,14 +12,13 @@ exports.create_user = (req, res) => {
       username: req.body.username,
       password: req.body.password
     });
-    debugger;
   
     newUser.save((error) => {
       if(error) {
         res.render('Signup', {'error': error});
         return;
       }
-        res.redirect('/login');
+      res.redirect('/login');
     });
   
   } else {
