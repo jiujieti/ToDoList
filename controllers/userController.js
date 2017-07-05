@@ -25,3 +25,10 @@ exports.create_user = (req, res) => {
     res.render('Signup', {'error': 'Passwords are different! Please enter them again.'});
   }
 };
+
+exports.validate_user = (req, res) => {
+  var newUser = new User({
+    username: req.body.username,
+    password: req.body.password
+  });
+};

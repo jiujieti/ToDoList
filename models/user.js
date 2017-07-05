@@ -9,11 +9,12 @@ var UserSchema = Schema({
   password: { type: String, required: true }
 });
 
-var User = mongoose.model('User', UserSchema);
+//var User = mongoose.model('User', UserSchema);
 
 // check username uniqueness
 UserSchema.path('username').validate(function(value, next) {
   var user = this;
+  var User = mongoose.model('User', UserSchema);
   User.count({ username: user.username }, function(error, results) {
     if(error) {
       next(error);
@@ -41,6 +42,5 @@ UserSchema.pre('save', function(next) {
     });
   });
 });
-
 
 module.exports = mongoose.model('User', UserSchema);
