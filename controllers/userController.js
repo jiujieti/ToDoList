@@ -15,7 +15,7 @@ exports.create_user = (req, res) => {
   
     newUser.save((error) => {
       if(error) {
-        res.render('Signup', {'error': error});
+        res.render('Signup', {'error': error.message});
         return;
       }
       res.redirect('/login');
