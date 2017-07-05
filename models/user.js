@@ -61,6 +61,12 @@ UserSchema.pre('save', function(next) {
   });
 });
 
+// add instance (document) methods to compare passwords
+UserSchema.methods.comparePassword = function() {
+  //bcrypt.
+
+};
+
 /* the reason why this can not be moved to line 12 is because the model needs to be created after the schema
 is ready. But pre-save hook needs the model to execute the query. Actually when the pre-hook is triggered, 
 the model has already been encapsulated below */
