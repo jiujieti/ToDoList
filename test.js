@@ -16,10 +16,11 @@ var User = mongoose.model('User', UserSchema);
 UserSchema.pre('save', function(next) {
   var user = this;
   user.password = user.password + "hello";
+  console.log("why????");
   next();
 });
 
- var newUser = new User({
+var newUser = new User({
     username: "jiujieti",
     password: "12345678"
 });
