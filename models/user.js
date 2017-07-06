@@ -48,13 +48,11 @@ UserSchema.pre('save', function(next) {
 UserSchema.pre('save', function(next) {
   var user = this;
   bcrypt.genSalt(saltRounds, function(error, salt) {
-    if(error) {
-      next(error);
-    }
+    if(error) next(error);
+  
     bcrypt.hash(user.password, salt, function(err, hash) {
-      if(err) {
-        next(err);
-      }
+      if(err) next(err);
+    
       user.password = hash;
       next();
     });
@@ -62,9 +60,13 @@ UserSchema.pre('save', function(next) {
 });
 
 // add instance (document) methods to compare passwords
-UserSchema.methods.comparePassword = function() {
-  //bcrypt.
+UserSchema.methods.comparePassword = function(candidate, cback) {
+  bcrypt.compare(candidate, this.password, function(err, isMatch) {
+    if(err) return cback(err);
 
+    cback(null, isMatch);
+
+  });
 };
 
 /* the reason why this can not be moved to line 12 is because the model needs to be created after the schema
