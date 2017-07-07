@@ -11,6 +11,10 @@ router.get('/', (req, res) => {
 /* user login, redirect to a user's to do list page */
 router.post('/validation', User.validate_user);
 
+router.get('/*/todolist', (req, res) => {
+  res.render('todolist');
+});
+
 //(req, res) => {
   // add user auth (to be deleted)
 //  if(req.body.username === user.name && req.body.password === user.password) {

@@ -44,7 +44,7 @@ exports.validate_user = (req, res) => {
         } else if(!isMatch) {
           res.render('index', { 'error': 'Passwords do not match. Try again.' });
         } else {
-          //direct to a user's onw todolist page
+          res.redirect('/login/' + newUser.username + '/todolist');
         }
       });
       
