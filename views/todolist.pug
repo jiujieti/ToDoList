@@ -1,9 +1,11 @@
 extends layout
 
 block content
-  h1= title
+  h1= 'To Do List - 未竟的事业'
   p
-    input(type='text', name='Submit an item', class='submitItem')
-    button(class='addItem') Add an item
+    form(action='', method='POST')
+      input(type='text', name='Submit an item', class='submitItem')
+      button(class='addItem') Add an item
+  p
     ul(id='l1', class='items')
   script(src='/javascripts/update.js')

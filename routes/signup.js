@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
   res.render('signup');
 });
 
-/* validate registry */
+/** validate registry */
 router.post('/verification', User.create_user); 
 
 module.exports = router;

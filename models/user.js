@@ -11,7 +11,7 @@ var UserSchema = Schema({
 
 var User;
 
-/*
+/**
 The validate function is a sync function, and the count function is a async one, which will return 
 immediately. So the validate function will not return a correct boolean value. The reason why we 
 could still see that the console outputs test, because the callback function is executed later.
@@ -30,7 +30,7 @@ UserSchema.path('username').validate(function(value, next) {
   });
 });*/
 
-// check username uniqueness
+/** check username uniqueness */
 UserSchema.pre('save', function(next) {
   var user = this;
   User.count({ username: user.username }, function(error, results) {
@@ -44,7 +44,7 @@ UserSchema.pre('save', function(next) {
   });
 });
 
-// generate salt
+/** generate salt */
 UserSchema.pre('save', function(next) {
   var user = this;
   bcrypt.genSalt(saltRounds, function(error, salt) {
@@ -59,7 +59,7 @@ UserSchema.pre('save', function(next) {
   });
 });
 
-// add instance (document) methods to compare passwords
+/** add instance (document) methods to compare passwords */
 UserSchema.methods.comparePassword = function(candidate, cback) {
   bcrypt.compare(candidate, this.password, function(err, isMatch) {
     if(err) return cback(err);
@@ -69,7 +69,7 @@ UserSchema.methods.comparePassword = function(candidate, cback) {
   });
 };
 
-/* the reason why this can not be moved to line 12 is because the model needs to be created after the schema
+/** the reason why this can not be moved to line 12 is because the model needs to be created after the schema
 is ready. But pre-save hook needs the model to execute the query. Actually when the pre-hook is triggered, 
 the model has already been encapsulated below */
 User = mongoose.model('User', UserSchema);
