@@ -11,6 +11,8 @@ router.get('/', (req, res) => {
 /** user login, redirect to a user's to do list page */
 router.post('/validation', User.validate_user);
 
+
+/** to do, move these to a new route file, use RESTful api */
 router.get('/*/todolist', (req, res) => {
   res.render('todolist');
 });
