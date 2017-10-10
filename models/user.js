@@ -31,43 +31,76 @@ UserSchema.path('username').validate(function(value, next) {
 });*/
 
 /** check username uniqueness */
+// UserSchema.pre('save', function(next) {
+//   var user = this;
+//   User.count({ username: user.username }, function(error, results) {
+//     if(error) {
+//       next(error);
+//     } else if(results) {
+//       next(new Error('User already registered! Try another one.'));
+//     } else {
+//       next();
+//     }
+//   });
+// });
 UserSchema.pre('save', function(next) {
   var user = this;
-  User.count({ username: user.username }, function(error, results) {
-    if(error) {
-      next(error);
-    } else if(results) {
+  User.count({ username: user.username }).then(function(results) {
+    if(results) {
       next(new Error('User already registered! Try another one.'));
     } else {
       next();
     }
+  }, function(error) {
+    next(error);
   });
 });
 
 /** generate salt */
+// UserSchema.pre('save', function(next) {
+//   var user = this;
+//   bcrypt.genSalt(saltRounds, function(error, salt) {
+//     if(error) next(error);
+  
+//     bcrypt.hash(user.password, salt, function(err, hash) {
+//       if(err) next(err);
+    
+//       user.password = hash;
+//       next();
+//     });
+//   });
+// });
+
 UserSchema.pre('save', function(next) {
   var user = this;
-  bcrypt.genSalt(saltRounds, function(error, salt) {
-    if(error) next(error);
-  
-    bcrypt.hash(user.password, salt, function(err, hash) {
-      if(err) next(err);
-    
-      user.password = hash;
-      next();
-    });
-  });
+  bcrypt.genSalt(saltRounds).then(function(salt) {
+    return bcrypt.hash(user.password, salt);
+  }, function(error) {
+    next(error);
+  }).then(function(hash) {
+    user.password = hash;
+    next();
+  }, function(error) {
+    next(error);
+  })
 });
 
 /** add instance (document) methods to compare passwords */
+// UserSchema.methods.comparePassword = function(candidate, cback) {
+//   bcrypt.compare(candidate, this.password, function(err, isMatch) {
+//     if(err) return cback(err);
+
+//     cback(null, isMatch);
+
+//   });
+// };
 UserSchema.methods.comparePassword = function(candidate, cback) {
-  bcrypt.compare(candidate, this.password, function(err, isMatch) {
-    if(err) return cback(err);
-
+  bcrypt.compare(candidate, this.password).then(function(isMatch) {
     cback(null, isMatch);
-
-  });
-};
+  }, function(error) {
+    return cback(error);
+  })
+}
 
 /** the reason why this can not be moved to line 12 is because the model needs to be created after the schema
 is ready. But pre-save hook needs the model to execute the query. Actually when the pre-hook is triggered, 
