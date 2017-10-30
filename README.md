@@ -6,9 +6,9 @@ A web application - to do list
 
 ## Features to be added
 
-1. User login
+1. User login (done)
 2. Data persistence （users, to-do-lists etc)
-3. Rewrite front-end js files by using React
+3. Use Redis for storing sessions (cookie will only contain seesionID)
 4. CSS framework may be
 
 ## Caveat
