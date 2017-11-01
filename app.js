@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var redis = require('redis');
 var RedisStore = require('connect-redis')(session);
 
 var index = require('./routes/index');
@@ -33,8 +34,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+var redisClient = redis.createClient();
 app.use(session({
-  store: new RedisStore(),
+  store: new RedisStore({
+    host: 'localhost',
+    port: 6379,
+    client: redisClient
+  }),
   secret: 'this-is-a-secrect-token',
   cookie: {
     maxAge: 60000

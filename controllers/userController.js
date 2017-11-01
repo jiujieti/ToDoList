@@ -44,6 +44,7 @@ exports.validate_user = (req, res) => {
         } else if(!isMatch) {
           res.render('index', { 'error': 'Passwords do not match. Try again.' });
         } else {
+          req.session.key = req.body.username;
           res.redirect('/todolist/' + newUser.username);
         }
       });
