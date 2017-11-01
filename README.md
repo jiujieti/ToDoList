@@ -13,4 +13,5 @@ A web application - to do list
 
 ## Issues
 
-1. Adding items does not work 
+1. Adding items does not work (POST method not finished)
+2. User controller: nested callbacks to promises 
