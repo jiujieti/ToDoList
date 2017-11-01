@@ -45,13 +45,14 @@ UserSchema.path('username').validate(function(value, next) {
 // });
 UserSchema.pre('save', function(next) {
   var user = this;
-  User.count({ username: user.username }).then(function(results) {
+  User.count({ username: user.username }).exec()
+    .then(function(results) {
     if(results) {
       next(new Error('User already registered! Try another one.'));
     } else {
       next();
     }
-  }, function(error) {
+  }).catch(function(error) {
     next(error);
   });
 });
@@ -75,14 +76,14 @@ UserSchema.pre('save', function(next) {
   var user = this;
   bcrypt.genSalt(saltRounds).then(function(salt) {
     return bcrypt.hash(user.password, salt);
-  }, function(error) {
+  }).catch(function(error) {
     next(error);
   }).then(function(hash) {
     user.password = hash;
     next();
-  }, function(error) {
+  }).catch(function(error) {
     next(error);
-  })
+  });
 });
 
 /** add instance (document) methods to compare passwords */
@@ -97,9 +98,9 @@ UserSchema.pre('save', function(next) {
 UserSchema.methods.comparePassword = function(candidate, cback) {
   bcrypt.compare(candidate, this.password).then(function(isMatch) {
     cback(null, isMatch);
-  }, function(error) {
+  }).catch(function(error) {
     return cback(error);
-  })
+  });
 }
 
 /** the reason why this can not be moved to line 12 is because the model needs to be created after the schema
