@@ -5,7 +5,7 @@ var router = express.Router();
 router.get('/:username', (req, res) => {
   if(req.params.username === req.session.key) {
     res.render('todolist');
-  } else{
+  } else {
     res.redirect('../login');
   }
 });
